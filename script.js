@@ -31,7 +31,22 @@ window.addEventListener('load', () => {
       });
     });
   });
-  
+
+// Hamburger Menu Toggle
+const hamburger = document.querySelector('.hamburger');
+const navLinksContainer = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+  navLinksContainer.classList.toggle('active');
+});
+
+// Close Navbar when a link is clicked (for mobile)
+navLinksContainer.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A' && window.innerWidth <= 768) {
+    navLinksContainer.classList.remove('active');
+  }
+});
+
   // Scroll Animations and Active Navigation
   const sections = document.querySelectorAll('section');
   const navLinks = document.querySelectorAll('.nav-links a'); // Declare navLinks once
@@ -60,17 +75,4 @@ window.addEventListener('load', () => {
     contactForm.reset();
   });
   
-  // Hamburger Menu Toggle
-const hamburger = document.querySelector('.hamburger');
-const navLinksContainer = document.querySelector('.nav-links');
-
-hamburger.addEventListener('click', () => {
-  navLinksContainer.classList.toggle('active');
-});
-
-// Close Navbar when a link is clicked (for mobile)
-navLinksContainer.addEventListener('click', (e) => {
-  if (e.target.tagName === 'A' && window.innerWidth <= 768) {
-    navLinksContainer.classList.remove('active');
-  }
-});
+  
