@@ -158,7 +158,7 @@
   }
   
   /* Theme Toggle Button */
-  .theme-toggle {
+.theme-toggle {
     position: fixed;
     top: 1rem;
     right: 1rem;
@@ -168,7 +168,7 @@
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.3s;
-    z-index: 1001;
+    z-index: 1001; /* Ensure it's above other content */
   }
   
   .theme-toggle:hover {
@@ -179,7 +179,15 @@
     color: #121212;
   }
   
-  /* Navigation Bar */
+  /* Media Query for Mobile View */
+  @media (max-width: 768px) {
+    .theme-toggle {
+      top: 5rem; /* Adjust top position for mobile */
+      right: 5rem; /* Adjust right position for mobile */
+      padding: 0.4rem; /* Slightly reduce padding for mobile */
+    }
+  }
+
   /* Navigation Bar */
 nav {
     background: linear-gradient(135deg, #1f1f1f, #121212);
@@ -619,3 +627,9 @@ nav {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+  @media (max-width: 768px) {
+    .certification:hover .project-photo {
+        display:none;
+      }
+  }
+  
