@@ -183,8 +183,8 @@
   @media (max-width: 768px) {
     .theme-toggle {
       top: 5rem; /* Adjust top position for mobile */
-      right: 4.5rem; /* Adjust right position for mobile */
-      padding: 0.4rem; /* Slightly reduce padding for mobile */
+      right: 3rem; /* Adjust right position for mobile */
+      padding: 0.2rem; /* Slightly reduce padding for mobile */
     }
   }
 
