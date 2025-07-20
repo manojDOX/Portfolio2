@@ -5,199 +5,203 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MANOJ B - Aspiring Data Analyst</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
     <style>
-        /* Custom Styles */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .dark .dark\:text-slate-300 {
-            color: #d1d5db;
-        }
-        .dark .dark\:bg-slate-900 {
-            background-color: #0f172a;
-        }
-        .dark .dark\:bg-slate-800 {
-            background-color: #1e293b;
-        }
-        .dark .dark\:border-slate-700 {
-            border-color: #334155;
-        }
-        .dark .dark\:hover\:bg-slate-700:hover {
-            background-color: #334155;
-        }
-        .dark .dark\:text-white {
-            color: #ffffff;
-        }
-        .dark .dark\:placeholder-slate-400::placeholder {
-            color: #94a3b8;
-        }
-        .glass-effect {
-             background: rgba(255, 255, 255, 0.1);
-             backdrop-filter: blur(10px);
-             -webkit-backdrop-filter: blur(10px);
-             border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        .dark .glass-effect {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        :root {
+            --bg-light: #f8f9fa;
+            --text-light: #212529;
+            --card-light: #ffffff;
+            --border-light: #e9ecef;
+
+            --bg-dark: #1a1d24;
+            --text-dark: #e9ecef;
+            --card-dark: #212529;
+            --border-dark: #343a40;
+            
+            --primary: #20c997; /* Teal */
+            --secondary: #ff6b6b; /* Coral */
+            --accent: #4dabf7; /* Blue */
         }
         
-        /* New Project Card Styles */
-        .project-card .overlay {
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out;
+        html.dark {
+            --bg-main: var(--bg-dark);
+            --text-main: var(--text-dark);
+            --card-bg: var(--card-dark);
+            --border-color: var(--border-dark);
         }
-        .project-card:hover .overlay {
-            opacity: 1;
+
+        html:not(.dark) {
+            --bg-main: var(--bg-light);
+            --text-main: var(--text-light);
+            --card-bg: var(--card-light);
+            --border-color: var(--border-light);
         }
-        .project-card .info {
-            transform: translateY(1rem);
-            transition: transform 0.4s ease-in-out;
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Roboto', sans-serif;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
-        .project-card:hover .info {
-            transform: translateY(0);
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .text-primary { color: var(--primary); }
+        .bg-primary { background-color: var(--primary); }
+        .border-primary { border-color: var(--primary); }
+        .hover\:bg-primary-dark:hover { background-color: #1aa07a; }
+
+        .text-secondary { color: var(--secondary); }
+        .bg-secondary { background-color: var(--secondary); }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.5s ease, border-color 0.5s ease;
+        }
+        
+        .nav-blur {
+            background: rgba(248, 249, 250, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .dark .nav-blur {
+            background: rgba(26, 29, 36, 0.7);
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        /* Scroll-reveal animations will be invisible until revealed */
+        .reveal {
+            visibility: hidden;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-300 transition-colors duration-500">
+<body class="antialiased">
 
-    <!-- Theme Toggle Button -->
-    <button id="theme-toggle" class="fixed top-4 right-4 z-50 p-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-lg">
-        <svg id="theme-toggle-dark-icon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-        <svg id="theme-toggle-light-icon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="fixed top-5 right-5 z-50 p-2.5 rounded-full card shadow-lg">
+        <i id="theme-icon" data-lucide="moon" class="h-5 w-5 text-main"></i>
     </button>
 
-    <!-- Header & Navigation -->
-    <header class="sticky top-0 z-40 w-full glass-effect">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="#" class="text-2xl font-bold text-slate-900 dark:text-white">MB.</a>
-                <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#about" class="font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">About</a>
-                    <a href="#projects" class="font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">Projects</a>
-                    <a href="#skills" class="font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">Skills</a>
-                    <a href="#contact" class="font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">Contact</a>
-                </nav>
-                <button class="md:hidden" id="mobile-menu-button">
-                    <i data-lucide="menu" class="h-6 w-6 text-slate-800 dark:text-slate-200"></i>
-                </button>
-            </div>
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 w-full z-40 nav-blur transition-shadow duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold text-primary">MB.</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="text-sm font-medium hover:text-primary transition-colors">About</a>
+                <a href="#projects" class="text-sm font-medium hover:text-primary transition-colors">Projects</a>
+                <a href="#skills" class="text-sm font-medium hover:text-primary transition-colors">Skills</a>
+                <a href="#contact" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+            </nav>
+            <button class="md:hidden" id="mobile-menu-button">
+                <i data-lucide="menu" class="h-6 w-6"></i>
+            </button>
         </div>
-         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800">About</a>
-                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800">Projects</a>
-                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800">Skills</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800">Contact</a>
-            </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
+            <a href="#about" class="block py-2 px-6 text-sm">About</a>
+            <a href="#projects" class="block py-2 px-6 text-sm">Projects</a>
+            <a href="#skills" class="block py-2 px-6 text-sm">Skills</a>
+            <a href="#contact" class="block py-2 px-6 text-sm">Contact</a>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <main class="container mx-auto px-6">
 
         <!-- Hero Section -->
-        <section id="hero" class="flex flex-col-reverse md:flex-row items-center justify-between py-20 md:py-32">
-            <div class="md:w-1/2 text-center md:text-left mt-10 md:mt-0">
-                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white leading-tight">
-                    MANOJ B
-                </h1>
-                <p class="mt-4 text-2xl text-indigo-500 dark:text-indigo-400 font-medium">Aspiring Data Analyst</p>
-                <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 max-w-lg mx-auto md:mx-0">
-                    Enthusiastic and detail-focused Data Analyst with hands-on experience in SQL, Excel, and Python.
-                </p>
-                <div class="mt-8 flex justify-center md:justify-start space-x-4">
-                    <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg">Get In Touch</a>
-                    <a href="#projects" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg">View My Work</a>
+        <section id="hero" class="min-h-screen flex items-center pt-24 md:pt-0">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <p class="text-primary font-semibold text-lg reveal" data-reveal-delay="100">Hello, I'm Manoj B.</p>
+                    <h1 class="text-5xl md:text-7xl font-bold mt-2 reveal" data-reveal-delay="200">Aspiring<br>Data Analyst</h1>
+                    <p class="mt-6 text-lg opacity-80 max-w-lg mx-auto md:mx-0 reveal" data-reveal-delay="300">I turn data into insights. Passionate about uncovering stories hidden in datasets and building powerful visualizations.</p>
+                    <div class="mt-10 flex justify-center md:justify-start space-x-4 reveal" data-reveal-delay="400">
+                        <a href="#contact" class="bg-primary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105">Let's Talk</a>
+                        <a href="#projects" class="card font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">My Work</a>
+                    </div>
                 </div>
-            </div>
-            <div class="md:w-1/2 flex justify-center">
-                <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl">
-                    <img src="https://placehold.co/300x300/FFFFFF/333333?text=MB" alt="Manoj B Portrait" class="w-60 h-60 md:w-72 md:h-72 rounded-full object-cover border-4 border-slate-50 dark:border-slate-900">
+                <div class="relative flex justify-center items-center reveal" data-reveal-delay="500">
+                    <div class="w-72 h-72 md:w-96 md:h-96 rounded-full bg-primary/20"></div>
+                    <div class="absolute w-72 h-96 md:w-80 md:h-[450px] card rounded-3xl overflow-hidden shadow-2xl transform rotate-3">
+                         <img src="https://placehold.co/400x500/20c997/1a1d24?text=MB" alt="Manoj B" class="w-full h-full object-cover">
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">About Me</h2>
-                <p class="text-lg text-slate-600 dark:text-slate-400 mt-2">A little bit about my journey.</p>
+        <section id="about" class="py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold reveal">About Me</h2>
+                <p class="text-lg opacity-70 mt-2 reveal">My journey and what drives me.</p>
             </div>
-            <div class="max-w-4xl mx-auto bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg">
-                <p class="text-slate-600 dark:text-slate-300 leading-relaxed" id="summary-content">
-                    Enthusiastic and detail-focused Data Analyst with hands-on experience in <span class="font-bold">SQL</span>, <span class="font-bold">Excel</span>, and <span class="font-bold">Python</span>. Built projects involving real-world datasets and created dashboards using <span class="font-bold">Power BI</span>. Strong interest in solving business problems using data. Quick learner, excited to grow and contribute to a data-driven team.
-                </p>
+            <div class="max-w-3xl mx-auto card p-8 md:p-12 rounded-2xl shadow-xl reveal">
+                <p id="summary-content" class="text-lg leading-relaxed opacity-90"></p>
             </div>
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">My Projects</h2>
-                <p class="text-lg text-slate-600 dark:text-slate-400 mt-2">A selection of my favorite work.</p>
+        <section id="projects" class="py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold reveal">My Projects</h2>
+                <p class="text-lg opacity-70 mt-2 reveal">A glimpse into my data explorations.</p>
             </div>
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project cards will be injected here by JavaScript -->
+            <div id="projects-grid" class="grid md:grid-cols-2 gap-8">
+                <!-- Project cards will be injected here -->
             </div>
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="py-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">My Skills</h2>
-                <p class="text-lg text-slate-600 dark:text-slate-400 mt-2">Technologies and tools I work with.</p>
+        <section id="skills" class="py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold reveal">Core Competencies</h2>
+                <p class="text-lg opacity-70 mt-2 reveal">The tools and technologies I use.</p>
             </div>
-            <div id="skills-container" class="max-w-4xl mx-auto space-y-8">
-                <!-- Skills will be injected here by JavaScript -->
+            <div id="skills-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Skills will be injected here -->
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20">
-             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">Get In Touch</h2>
-                <p class="text-lg text-slate-600 dark:text-slate-400 mt-2">Let's build something amazing together.</p>
+        <section id="contact" class="py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold reveal">Let's Connect</h2>
+                <p class="text-lg opacity-70 mt-2 reveal">Have a project in mind or just want to say hi?</p>
             </div>
-            <div class="max-w-xl mx-auto">
-                <form action="mailto:manoj2882003@gmail.com" method="GET" class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg space-y-6">
+            <div class="max-w-xl mx-auto card p-8 rounded-2xl shadow-xl reveal">
+                <form action="mailto:manoj2882003@gmail.com" method="GET" class="space-y-6">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Name</label>
-                        <input type="text" name="subject" id="name" class="mt-1 block w-full px-4 py-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your Name">
+                        <label for="name" class="font-medium opacity-80">Name</label>
+                        <input type="text" name="subject" id="name" class="mt-2 w-full p-3 rounded-lg bg-transparent border-2 border-border-color focus:border-primary focus:outline-none transition-colors" placeholder="Your Name">
                     </div>
                     <div>
-                        <label for="message" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Message</label>
-                        <textarea id="message" name="body" rows="4" class="mt-1 block w-full px-4 py-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your message..."></textarea>
+                        <label for="message" class="font-medium opacity-80">Message</label>
+                        <textarea id="message" name="body" rows="5" class="mt-2 w-full p-3 rounded-lg bg-transparent border-2 border-border-color focus:border-primary focus:outline-none transition-colors" placeholder="Your message..."></textarea>
                     </div>
-                    <div>
-                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-white font-bold bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
-                            Send Message
-                        </button>
-                    </div>
+                    <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105">
+                        Send Message
+                    </button>
                 </form>
             </div>
         </section>
-
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <p class="text-slate-500 dark:text-slate-400">&copy; 2024 MANOJ B. All Rights Reserved.</p>
-                <div id="social-links" class="flex space-x-6 mt-4 md:mt-0">
-                    <!-- Social links will be injected here -->
-                </div>
+    <footer class="border-t border-border-color mt-24">
+        <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <p class="opacity-70 text-sm">&copy; 2025 MANOJ B. Crafted with passion.</p>
+            <div id="social-links" class="flex space-x-6 mt-6 md:mt-0">
+                <!-- Social links will be injected here -->
             </div>
         </div>
     </footer>
-
 
     <script>
         const resumeData = {
@@ -205,160 +209,118 @@
             "name": "MANOJ B",
             "headline": "Aspiring Data Analyst",
             "email": "manoj2882003@gmail.com",
-            "phone": "+91 95383 95727",
-            "location": "Banglore",
-            "url": { "label": "Portfolio Website", "href": "https://manojdox.github.io/Portfolio2/" }
+            "summary": "Enthusiastic and detail-focused Data Analyst with hands-on experience in <strong>SQL</strong>, <strong>Excel</strong>, and <strong>Python</strong>. Built projects involving real-world datasets and created dashboards using <strong>Power BI</strong>. Strong interest in solving business problems using data. Quick learner, excited to grow and contribute to a data-driven team."
           },
-          "sections": {
-            "summary": { "content": "<p>Enthusiastic and detail-focused Data Analyst with hands-on experience in <strong>SQL</strong>,<strong> Excel</strong>, and <strong>Python</strong>. Built projects involving real-world datasets and created dashboards using<strong> Power BI</strong>. Strong interest in solving business problems using data. Quick learner, excited to grow and contribute to a data-driven team.</p>" },
-            "profiles": {
-              "items": [
-                { "network": "LinkedIn", "url": { "href": "https://linkedin.com/in/manoj-b-390821218" }, "icon": "linkedin" },
-                { "network": "GitHub", "url": { "href": "https://github.com/manojDOX" }, "icon": "github" }
-              ]
-            },
-            "projects": {
-              "items": [
-                { "name": "Amazon E-Commerce Product Analysis (EDA Project)", "summary": "<ul><li><p>Explored Amazon product data to detect high-performing categories and pricing strategies. Analysis revealed trends that could guide product placement and discount decisions.</p></li></ul>", "keywords": ["EDA", "Python"], "url": { "label": "GitHub-Project-1", "href": "https://github.com/manojDOX/Amazon-EDA-Report" }, "imageUrl": "https://static.vecteezy.com/system/resources/previews/046/437/251/non_2x/amazon-prime-logo-free-png.png" },
-                { "name": "Play Store App Review Analysis (EDA using Python & Pandas)", "summary": "<ul><li><p>Analyzed 10,000+ user reviews using Python to uncover sentiment patterns and common complaints. Findings helped identify key issues affecting app ratings and retention.</p></li></ul>", "keywords": ["Python", "Pandas"], "url": { "label": "GitHub-Project-2", "href": "https://github.com/manojDOX/Play-Store-App-Review-Analysis-EDA" }, "imageUrl": "https://user-images.githubusercontent.com/123643720/247931627-f91aede9-5c8e-45fa-8c3d-cf352448f2ff.png" },
-                { "name": "Tokyo Olympics 2021 Power BI Dashboard", "summary": "<p>Built an interactive Power BI report to analyze athlete participation, gender distribution, and medal counts from the Tokyo 2021 Olympics. Key insights included top countries, medal leaders, and gender parity.</p>", "keywords": ["Power BI", "Dashboard"], "url": { "label": "GitHub-Project-3", "href": "https://github.com/manojDOX/Olympics-2021-PBI" }, "imageUrl": "https://pixelz.cc/wp-content/uploads/2017/12/tokyo-2020-summer-olympics-logo-uhd-4k-wallpaper.jpg" },
-                { "name": "Medical Cost Analysis Dashboard", "summary": "<p>Built a Power BI report analyzing medical insurance data to uncover cost patterns by age, gender, region, BMI, and smoking status. Identified smokers and Southeast residents as key cost drivers.</p>", "keywords": ["Power BI", "Analysis"], "url": { "label": "GitHub-Project-4", "href": "https://github.com/manojDOX/Medical-Cost-Personal" }, "imageUrl": "https://play-lh.googleusercontent.com/r9xXKQBM0b8YCpECTkXQn9wYI2WXLG5otQZKJEUrbvINS7NvssUNOYx4BJA2npwSVQ" }
-              ]
-            },
-            "skills": {
-              "items": [
-                { "name": "Data Analysis Tools", "keywords": ["Excel", "Google Sheets", "Jupyter Notebook", "SQL"] },
-                { "name": "Programming & Scripting", "keywords": ["NumPy", "matplotlib", "SQL", "Python", "Pandas", "seaborn"] },
-                { "name": "Data Visualization", "keywords": ["Power BI", "Tableau", "matplotlib", "seaborn", "Plotly"] },
-                { "name": "Database & Querying", "keywords": ["MySQL", "PostgreSQL", "SQLite"] },
-                { "name": "Other Tools", "keywords": ["Git", "VS Code", "Google Colab", "GitHub"] }
-              ]
-            }
-          }
+          "profiles": [
+            { "network": "LinkedIn", "url": "https://linkedin.com/in/manoj-b-390821218", "icon": "linkedin" },
+            { "network": "GitHub", "url": "https://github.com/manojDOX", "icon": "github" }
+          ],
+          "projects": [
+            { "name": "Amazon E-Commerce Product Analysis", "summary": "Explored Amazon product data to detect high-performing categories and pricing strategies.", "keywords": ["EDA", "Python"], "url": "https://github.com/manojDOX/Amazon-EDA-Report", "imageUrl": "https://static.vecteezy.com/system/resources/previews/046/437/251/non_2x/amazon-prime-logo-free-png.png" },
+            { "name": "Play Store App Review Analysis", "summary": "Analyzed 10,000+ user reviews using Python to uncover sentiment patterns and common complaints.", "keywords": ["Python", "Pandas"], "url": "https://github.com/manojDOX/Play-Store-App-Review-Analysis-EDA", "imageUrl": "https://user-images.githubusercontent.com/123643720/247931627-f91aede9-5c8e-45fa-8c3d-cf352448f2ff.png" },
+            { "name": "Tokyo Olympics 2021 Dashboard", "summary": "Built an interactive Power BI report to analyze athlete participation, gender distribution, and medal counts.", "keywords": ["Power BI", "Dashboard"], "url": "https://github.com/manojDOX/Olympics-2021-PBI", "imageUrl": "https://pixelz.cc/wp-content/uploads/2017/12/tokyo-2020-summer-olympics-logo-uhd-4k-wallpaper.jpg" },
+            { "name": "Medical Cost Analysis Dashboard", "summary": "Built a Power BI report analyzing medical insurance data to uncover cost patterns by age, gender, and region.", "keywords": ["Power BI", "Analysis"], "url": "https://github.com/manojDOX/Medical-Cost-Personal", "imageUrl": "https://play-lh.googleusercontent.com/r9xXKQBM0b8YCpECTkXQn9wYI2WXLG5otQZKJEUrbvINS7NvssUNOYx4BJA2npwSVQ" }
+          ],
+          "skills": [
+            { "name": "Data Analysis Tools", "keywords": ["Excel", "Google Sheets", "Jupyter Notebook", "SQL"], "icon": "database-zap" },
+            { "name": "Programming & Scripting", "keywords": ["Python", "Pandas", "NumPy", "matplotlib", "seaborn"], "icon": "code-2" },
+            { "name": "Data Visualization", "keywords": ["Power BI", "Tableau", "matplotlib", "seaborn", "Plotly"], "icon": "bar-chart-3" },
+            { "name": "Database & Querying", "keywords": ["MySQL", "PostgreSQL", "SQLite"], "icon": "database" },
+            { "name": "Developer Tools", "keywords": ["Git", "GitHub", "VS Code", "Google Colab"], "icon": "terminal-square" }
+          ]
         };
 
-        // Function to strip HTML tags
-        function stripHtml(html) {
-           let tmp = document.createElement("DIV");
-           tmp.innerHTML = html;
-           return tmp.textContent || tmp.innerText || "";
-        }
+        // --- DOM Population ---
+        document.getElementById('summary-content').innerHTML = resumeData.basics.summary;
 
-        // Populate Projects with New Design
         const projectsGrid = document.getElementById('projects-grid');
-        resumeData.sections.projects.items.forEach((project, index) => {
+        resumeData.projects.forEach(project => {
             const projectCard = `
-                <div class="project-card relative rounded-xl shadow-lg overflow-hidden group bg-white">
-                    <img src="${project.imageUrl}" alt="${project.name}" class="w-full h-64 object-contain p-4 transition-transform duration-500 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
-                    <div class="overlay absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center p-6">
-                        <div class="info text-center text-white">
-                            <h3 class="text-xl font-bold mb-2">${project.name}</h3>
-                            <p class="text-slate-300 mb-4 text-sm">${stripHtml(project.summary).substring(0, 100)}...</p>
-                            <a href="${project.url.href}" target="_blank" rel="noopener noreferrer" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">
-                                View Project
-                            </a>
+                <div class="card rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 reveal">
+                    <div class="h-40 mb-6 rounded-lg overflow-hidden bg-white p-4">
+                        <img src="${project.imageUrl}" alt="${project.name} Logo" class="w-full h-full object-contain" onerror="this.onerror=null;this.src='https://placehold.co/400x200/cccccc/ffffff?text=Image+Not+Found';">
+                    </div>
+                    <h3 class="text-xl font-bold">${project.name}</h3>
+                    <p class="mt-2 opacity-70 text-sm h-12">${project.summary}</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <div class="flex flex-wrap gap-2">
+                            ${project.keywords.map(k => `<span class="text-xs font-semibold bg-primary/10 text-primary px-2 py-1 rounded-full">${k}</span>`).join('')}
                         </div>
+                        <a href="${project.url}" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-primary-dark transition-colors">
+                            <i data-lucide="arrow-up-right" class="h-6 w-6"></i>
+                        </a>
                     </div>
                 </div>`;
             projectsGrid.innerHTML += projectCard;
         });
 
-        // Populate Skills with New Design
         const skillsContainer = document.getElementById('skills-container');
-        const skillCategoryColors = {
-            'Data Analysis Tools': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
-            'Programming & Scripting': 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300',
-            'Data Visualization': 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300',
-            'Database & Querying': 'bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-300',
-            'Other Tools': 'bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300'
-        };
-
-        resumeData.sections.skills.items.forEach(category => {
-            const categoryElement = document.createElement('div');
-            categoryElement.className = 'bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg';
-            
-            const titleElement = document.createElement('h3');
-            titleElement.className = 'text-xl font-bold text-slate-900 dark:text-white mb-4';
-            titleElement.textContent = category.name;
-
-            const tagsContainer = document.createElement('div');
-            tagsContainer.className = 'flex flex-wrap gap-2';
-
-            category.keywords.forEach(keyword => {
-                const tagElement = document.createElement('span');
-                const colorClasses = skillCategoryColors[category.name] || skillCategoryColors['Other Tools'];
-                tagElement.className = `font-medium px-3 py-1 rounded-full text-sm ${colorClasses}`;
-                tagElement.textContent = keyword;
-                tagsContainer.appendChild(tagElement);
-            });
-
-            categoryElement.appendChild(titleElement);
-            categoryElement.appendChild(tagsContainer);
-            skillsContainer.appendChild(categoryElement);
+        resumeData.skills.forEach(category => {
+            const skillCard = `
+                <div class="card p-6 rounded-2xl shadow-lg reveal">
+                    <div class="flex items-center gap-4">
+                        <i data-lucide="${category.icon}" class="h-8 w-8 text-primary"></i>
+                        <h3 class="text-xl font-bold">${category.name}</h3>
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        ${category.keywords.map(k => `<span class="text-sm font-medium bg-gray-500/10 px-3 py-1 rounded-full">${k}</span>`).join('')}
+                    </div>
+                </div>`;
+            skillsContainer.innerHTML += skillCard;
         });
-
-
-        // Populate Social Links
+        
         const socialLinksContainer = document.getElementById('social-links');
-        resumeData.sections.profiles.items.forEach(profile => {
-            const socialLink = `
-                <a href="${profile.url.href}" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
+        resumeData.profiles.forEach(profile => {
+            socialLinksContainer.innerHTML += `
+                <a href="${profile.url}" target="_blank" rel="noopener noreferrer" class="opacity-70 hover:opacity-100 hover:text-primary transition-all">
                     <i data-lucide="${profile.icon}" class="h-6 w-6"></i>
                 </a>`;
-            socialLinksContainer.innerHTML += socialLink;
         });
 
-        // Initialize Lucide Icons
+        // --- Interactions ---
         lucide.createIcons();
 
-        // Theme Toggle Logic
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
 
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            themeToggleLightIcon.classList.remove('hidden');
-        } else {
-            document.documentElement.classList.remove('dark');
-            themeToggleDarkIcon.classList.remove('hidden');
-        }
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.classList.toggle('dark', savedTheme === 'dark');
+        themeIcon.setAttribute('data-lucide', savedTheme === 'dark' ? 'sun' : 'moon');
+        lucide.createIcons();
 
-        themeToggleBtn.addEventListener('click', function() {
-            themeToggleDarkIcon.classList.toggle('hidden');
-            themeToggleLightIcon.classList.toggle('hidden');
-            if (localStorage.getItem('color-theme')) {
-                if (localStorage.getItem('color-theme') === 'light') {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                }
-            } else {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                }
-            }
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeIcon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+            lucide.createIcons();
         });
-        
-        // Mobile Menu Logic
+
+        // Mobile Menu
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
 
-        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
+        // Header Shadow on Scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('shadow-lg', window.scrollY > 10);
+        });
+
+        // Scroll Reveal Animations
+        ScrollReveal().reveal('.reveal', {
+            delay: 200,
+            distance: '40px',
+            origin: 'bottom',
+            duration: 800,
+            easing: 'cubic-bezier(0.5, 0, 0, 1)',
+            interval: 150,
+            reset: false,
         });
 
     </script>
