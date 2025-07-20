@@ -208,6 +208,7 @@
                         <span>Generate Ideas</span>
                     </button>
                 </div>
+                 <div id="api-key-status" class="text-xs text-center mt-4 opacity-60"></div>
             </div>
             <div id="ai-results-container" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- AI-generated project ideas will appear here -->
@@ -294,6 +295,20 @@
         </div>
     </footer>
     
+    <!-- API Key Modal -->
+    <div id="api-key-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+        <div class="card p-8 rounded-2xl shadow-2xl max-w-md w-full mx-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-2xl font-bold">Enter Your Gemini API Key</h3>
+                <button id="close-modal-btn"><i data-lucide="x" class="h-6 w-6 opacity-70 hover:opacity-100"></i></button>
+            </div>
+            <p class="mt-4 opacity-80">To use the AI Project Hub, please provide your own Google Gemini API key. Your key will only be stored in your browser for this session and will not be shared.</p>
+            <input type="password" id="api-key-input" class="mt-4 w-full p-3 rounded-lg bg-transparent border-2 border-border-color focus:border-primary focus:outline-none transition-colors" placeholder="Paste your API key here">
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-sm text-primary hover:underline mt-2 inline-block">Get a free API key from Google AI Studio &rarr;</a>
+            <button id="save-key-btn" class="mt-6 w-full bg-primary text-white font-bold py-3 rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-300">Save & Generate</button>
+        </div>
+    </div>
+
     <!-- Copy Notification -->
     <div id="copy-notification" class="fixed bottom-5 right-5 bg-primary text-white py-2 px-4 rounded-lg shadow-lg opacity-0 translate-y-4 transition-all duration-300">
         Email copied to clipboard!
@@ -445,8 +460,49 @@
         const promptInput = document.getElementById('ai-prompt-input');
         const resultsContainer = document.getElementById('ai-results-container');
         const loader = document.getElementById('ai-loader');
+        const apiKeyModal = document.getElementById('api-key-modal');
+        const apiKeyInput = document.getElementById('api-key-input');
+        const saveKeyBtn = document.getElementById('save-key-btn');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const apiKeyStatus = document.getElementById('api-key-status');
+
+        function updateApiKeyStatus() {
+            const apiKey = sessionStorage.getItem('geminiApiKey');
+            if (apiKey) {
+                apiKeyStatus.innerHTML = `API Key is set for this session. <button id="clear-key-btn" class="text-secondary underline">Clear</button>`;
+                document.getElementById('clear-key-btn').addEventListener('click', () => {
+                    sessionStorage.removeItem('geminiApiKey');
+                    updateApiKeyStatus();
+                });
+            } else {
+                apiKeyStatus.textContent = 'No API Key set. You will be prompted.';
+            }
+        }
+        updateApiKeyStatus();
+
+        closeModalBtn.addEventListener('click', () => apiKeyModal.classList.add('hidden'));
+        
+        saveKeyBtn.addEventListener('click', () => {
+            const apiKey = apiKeyInput.value.trim();
+            if (apiKey) {
+                sessionStorage.setItem('geminiApiKey', apiKey);
+                apiKeyModal.classList.add('hidden');
+                updateApiKeyStatus();
+                generateBtn.click(); // Automatically trigger generation after saving
+            } else {
+                alert('Please enter a valid API key.');
+            }
+        });
 
         generateBtn.addEventListener('click', async () => {
+            let apiKey = sessionStorage.getItem('geminiApiKey');
+
+            if (!apiKey) {
+                apiKeyModal.classList.remove('hidden');
+                lucide.createIcons(); // Re-render icons in modal
+                return;
+            }
+
             const userInput = promptInput.value.trim();
             if (!userInput) {
                 alert("Please enter a topic.");
@@ -482,7 +538,7 @@
                         }
                     }
                 };
-                const apiKey = ""; // API key will be provided by the environment
+                
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -492,7 +548,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`);
+                    throw new Error(`API request failed. Status: ${response.status}. Please check your API key and network connection.`);
                 }
 
                 const result = await response.json();
@@ -506,7 +562,7 @@
 
             } catch (error) {
                 console.error("Error fetching from Gemini API:", error);
-                resultsContainer.innerHTML = `<p class="text-center text-secondary col-span-full">Sorry, something went wrong while generating ideas. Please try again.</p>`;
+                resultsContainer.innerHTML = `<p class="text-center text-secondary col-span-full">${error.message}</p>`;
             } finally {
                 loader.classList.add('hidden');
                 generateBtn.disabled = false;
