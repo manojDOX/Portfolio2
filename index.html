@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <style>
         :root {
             --bg-light: #f8f9fa;
@@ -103,10 +104,23 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Particle container */
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
 
     </style>
 </head>
 <body class="antialiased">
+    
+    <!-- Particle Animation Container -->
+    <div id="tsparticles"></div>
 
     <!-- Theme Toggle -->
     <button id="theme-toggle" class="fixed top-5 right-5 z-50 p-2.5 rounded-full card shadow-lg">
@@ -256,7 +270,7 @@
                     </button>
                 </div>
                 <!-- WhatsApp Card -->
-                <a href="https://wa.me/919538395727" target="_blank" rel="noopener noreferrer" class="card contact-card p-8 rounded-2xl shadow-lg block reveal flex flex-col justify-between">
+                <a href="https://wa.me/919538395727" target="_blank" rel="noopener noreferrer" class="card contact-card p-8 rounded-2xl shadow-lg block reveal flex flex-col justify-between group">
                     <div class="flex items-center gap-4">
                         <div class="p-3 rounded-full bg-green-500/10">
                            <i data-lucide="message-circle" class="h-8 w-8 text-green-500"></i>
@@ -269,7 +283,7 @@
                      <div class="text-center mt-6 w-full bg-primary text-white font-bold py-3 rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-300 transform group-hover:scale-105">Send a Message</div>
                 </a>
                 <!-- LinkedIn Card -->
-                <a href="https://linkedin.com/in/manoj-b-390821218" target="_blank" rel="noopener noreferrer" class="card contact-card p-8 rounded-2xl shadow-lg block reveal flex flex-col justify-between">
+                <a href="https://linkedin.com/in/manoj-b-390821218" target="_blank" rel="noopener noreferrer" class="card contact-card p-8 rounded-2xl shadow-lg block reveal flex flex-col justify-between group">
                     <div class="flex items-center gap-4">
                         <div class="p-3 rounded-full bg-blue-500/10">
                            <i data-lucide="linkedin" class="h-8 w-8 text-blue-500"></i>
@@ -282,7 +296,7 @@
                      <div class="text-center mt-6 w-full bg-primary text-white font-bold py-3 rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-300 transform group-hover:scale-105">View Profile</div>
                 </a>
                 <!-- GitHub Card -->
-                <a href="https://github.com/manojDOX" target="_blank" rel="noopener noreferrer" class="card contact-card p-8 rounded-2xl shadow-lg block reveal flex flex-col justify-between">
+                <a href="https://github.com/manojDOX" target="_blank" rel="noopener noreferrer" class="card contact-card p-8 rounded-2xl shadow-lg block reveal flex flex-col justify-between group">
                     <div class="flex items-center gap-4">
                         <div class="p-3 rounded-full bg-gray-500/10">
                            <i data-lucide="github" class="h-8 w-8 text-gray-500"></i>
@@ -608,6 +622,75 @@
                 reset: false,
             });
         }
+        
+        // Particle Animation
+        tsParticles.load("tsparticles", {
+            fpsLimit: 60,
+            interactivity: {
+                events: {
+                    onHover: {
+                        enable: true,
+                        mode: "repulse",
+                    },
+                    onClick: {
+                        enable: true,
+                        mode: "push",
+                    },
+                    resize: true,
+                },
+                modes: {
+                    repulse: {
+                        distance: 100,
+                        duration: 0.4,
+                    },
+                     push: {
+                        quantity: 4,
+                    },
+                },
+            },
+            particles: {
+                color: {
+                    value: ["#20c997", "#4dabf7"],
+                },
+                links: {
+                    color: "#a0aec0",
+                    distance: 150,
+                    enable: true,
+                    opacity: 0.2,
+                    width: 1,
+                },
+                collisions: {
+                    enable: true,
+                },
+                move: {
+                    direction: "none",
+                    enable: true,
+                    outModes: {
+                        default: "bounce",
+                    },
+                    random: false,
+                    speed: 1,
+                    straight: false,
+                },
+                number: {
+                    density: {
+                        enable: true,
+                        area: 800,
+                    },
+                    value: 50,
+                },
+                opacity: {
+                    value: 0.5,
+                },
+                shape: {
+                    type: "circle",
+                },
+                size: {
+                    value: { min: 1, max: 5 },
+                },
+            },
+            detectRetina: true,
+        });
 
     </script>
 </body>
