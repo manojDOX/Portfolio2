@@ -236,6 +236,8 @@
                 </div>
             <div id="cert-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 </div>
+            <div id="show-more-container" class="mt-12 text-center reveal">
+                </div>
         </section>
 
         <section id="ai-hub" class="py-24">
@@ -422,11 +424,36 @@
             { "name": "Numerical Programming in Python", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
             { "name": "End Course Quiz Assessment - Numerical Python Programming", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
             { "name": "Product Dissection", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Statistics" },
-            { "name": "Relational Databases", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "SQL & Databases" }
+            { "name": "Relational Databases", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "SQL & Databases" },
+            { "name": "Data Visualization with Matplotlib & Seaborn", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Skill Mastery Challenge - Data wrangling Libraries", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Data Wrangling on Different Data Formats", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Advanced Data Wrangling Concepts", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Mastering Data Wrangling", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Getting Started with Numpy and Pandas", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Research paper - II: Numerical Programming in Python", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Research Paper - I: Numerical Programming in Python", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Skill Mastery Challenge: Data Insights with APIs & EDA", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Streamlit Dashboards with dynamic interactions", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Exploratory Data Analysis via APIs", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Interactive Visuals with Plotly", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Introduction to Computer Programming", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "CodeStorm Challenge Introduction to Computer Programming", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Data Modelling via APIs", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Mid Course Quiz Assessment-Numerical Programming in Python", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Skill Mastery Challenge - Data Visualization Libraries", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Data Visualization Tips & Variable Analysis", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "End Course Quiz Assessment Python Basics - II", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Skill Mastery Challenge - Object Oriented Programming", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Research Paper II - Introduction to Computer Programming", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Research Paper I - Introduction to Computer Programming", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Mid Course Quiz Assessment Python Basics - I", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Skill Mastery Challenge - Python Control Flow", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" },
+            { "name": "Skill Mastery Challenge - Getting Started with Python", "issuer": "AlmaBetter", "url": "#", "icon": "award", "category": "Python" }
           ]
         };
 
-        // --- DOM Population ---
+        // --- DOM Population (excluding certifications) ---
         document.getElementById('summary-content').innerHTML = resumeData.basics.summary;
 
         const projectsGrid = document.getElementById('projects-grid');
@@ -476,34 +503,24 @@
         // --- NEW: Certification Section Logic ---
         const certGrid = document.getElementById('cert-grid');
         const certFiltersContainer = document.getElementById('cert-filters');
+        const showMoreContainer = document.getElementById('show-more-container');
         
-        // Get unique categories from data, plus "All"
-        const categories = ['All', ...new Set(resumeData.certifications.map(c => c.category))];
-        
-        // Render filter buttons
-        categories.forEach(category => {
-            const count = category === 'All' 
-                ? resumeData.certifications.length 
-                : resumeData.certifications.filter(c => c.category === category).length;
-            
-            const button = document.createElement('button');
-            button.className = 'filter-btn font-bold py-2 px-5 rounded-full shadow-md';
-            button.textContent = `${category} (${count})`;
-            button.setAttribute('data-category', category);
-            if (category === 'All') {
-                button.classList.add('active');
-            }
-            certFiltersContainer.appendChild(button);
-        });
-        
-        // Function to render certificates based on category
-        const renderCertificates = (filterCategory) => {
-            certGrid.innerHTML = '';
-            const filteredCerts = filterCategory === 'All'
+        const CERT_LIMIT = 6;
+        let currentCategory = 'All';
+        let isExpanded = false;
+
+        const renderCerts = () => {
+            // Filter certs by category
+            const filteredCerts = currentCategory === 'All'
                 ? resumeData.certifications
-                : resumeData.certifications.filter(c => c.category === filterCategory);
-                
-            filteredCerts.forEach(cert => {
+                : resumeData.certifications.filter(c => c.category === currentCategory);
+
+            // Determine which certs to display (limited or all)
+            const certsToDisplay = isExpanded ? filteredCerts : filteredCerts.slice(0, CERT_LIMIT);
+
+            // Populate the grid
+            certGrid.innerHTML = '';
+            certsToDisplay.forEach(cert => {
                 const certCard = `
                     <div class="card p-6 rounded-2xl shadow-lg flex items-center gap-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 reveal">
                         <div class="p-3 rounded-full bg-primary/10 flex-shrink-0">
@@ -517,27 +534,65 @@
                 `;
                 certGrid.innerHTML += certCard;
             });
-            lucide.createIcons(); // Re-render icons for new cards
-            // Re-run ScrollReveal on new elements
+
+            // Render the "Show More/Less" button
+            showMoreContainer.innerHTML = '';
+            if (filteredCerts.length > CERT_LIMIT) {
+                const remainingCount = filteredCerts.length - CERT_LIMIT;
+                const buttonText = isExpanded 
+                    ? 'Show Less' 
+                    : `Show ${remainingCount} More <i data-lucide="chevron-down" class="inline-block h-4 w-4 ml-1"></i>`;
+                
+                const button = document.createElement('button');
+                button.innerHTML = buttonText;
+                button.className = 'bg-primary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105';
+                button.onclick = () => {
+                    isExpanded = !isExpanded;
+                    renderCerts();
+                };
+                showMoreContainer.appendChild(button);
+            }
+
+            lucide.createIcons();
             ScrollReveal().reveal(certGrid.querySelectorAll('.reveal'), {
                 delay: 100, distance: '20px', origin: 'bottom', duration: 400, interval: 50, reset: false,
             });
         };
         
-        // Add event listener for filter buttons
+        // Setup Filter buttons
+        const categories = ['All', 'Power BI', 'SQL & Databases', 'Python', 'Tableau', 'Statistics', 'Excel'];
+        certFiltersContainer.innerHTML = ''; // Clear any existing buttons before rendering
+        categories.forEach(category => {
+            const count = category === 'All' 
+                ? resumeData.certifications.length 
+                : resumeData.certifications.filter(c => c.category === category).length;
+            
+            if (count > 0) { // Only show categories that have certificates
+                const button = document.createElement('button');
+                button.className = 'filter-btn font-bold py-2 px-5 rounded-full shadow-md';
+                button.textContent = `${category} (${count})`;
+                button.setAttribute('data-category', category);
+                if (category === currentCategory) {
+                    button.classList.add('active');
+                }
+                certFiltersContainer.appendChild(button);
+            }
+        });
+
         certFiltersContainer.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
-                // Update active button style
+                currentCategory = e.target.getAttribute('data-category');
+                isExpanded = false; // Reset expansion state
+                
                 certFiltersContainer.querySelector('.active').classList.remove('active');
                 e.target.classList.add('active');
                 
-                const category = e.target.getAttribute('data-category');
-                renderCertificates(category);
+                renderCerts();
             }
         });
-        
-        // Initial render of all certificates
-        renderCertificates('All');
+
+        // Initial render
+        renderCerts();
 
 
         // --- Interactions ---
