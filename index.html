@@ -115,19 +115,25 @@
             z-index: -1;
         }
 
+        /* Hide scrollbar for certifications carousel */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
     </style>
 </head>
 <body class="antialiased">
     
-    <!-- Particle Animation Container -->
     <div id="tsparticles"></div>
 
-    <!-- Theme Toggle -->
     <button id="theme-toggle" class="fixed top-5 right-5 z-50 p-2.5 rounded-full card shadow-lg">
         <i id="theme-icon" data-lucide="moon" class="h-5 w-5 text-main"></i>
     </button>
 
-    <!-- Header -->
     <header id="header" class="fixed top-0 left-0 w-full z-40 nav-blur transition-shadow duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-3xl font-bold text-primary">MB.</a>
@@ -135,6 +141,7 @@
                 <a href="#about" class="text-sm font-medium hover:text-primary transition-colors">About</a>
                 <a href="#projects" class="text-sm font-medium hover:text-primary transition-colors">Projects</a>
                 <a href="#skills" class="text-sm font-medium hover:text-primary transition-colors">Skills</a>
+                <a href="#certifications" class="text-sm font-medium hover:text-primary transition-colors">Certifications</a>
                 <a href="#ai-hub" class="text-sm font-medium hover:text-primary transition-colors">✨ AI Hub</a>
                 <a href="#contact" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
             </nav>
@@ -142,11 +149,11 @@
                 <i data-lucide="menu" class="h-6 w-6"></i>
             </button>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden pb-4">
             <a href="#about" class="block py-2 px-6 text-sm">About</a>
             <a href="#projects" class="block py-2 px-6 text-sm">Projects</a>
             <a href="#skills" class="block py-2 px-6 text-sm">Skills</a>
+            <a href="#certifications" class="block py-2 px-6 text-sm">Certifications</a>
             <a href="#ai-hub" class="block py-2 px-6 text-sm">✨ AI Hub</a>
             <a href="#contact" class="block py-2 px-6 text-sm">Contact</a>
         </div>
@@ -154,7 +161,6 @@
 
     <main class="container mx-auto px-6">
 
-        <!-- Hero Section -->
         <section id="hero" class="min-h-screen flex items-center pt-24 md:pt-0">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="text-center md:text-left">
@@ -189,7 +195,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="py-24">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold reveal">About Me</h2>
@@ -200,29 +205,37 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
         <section id="projects" class="py-24">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold reveal">My Projects</h2>
                 <p class="text-lg opacity-70 mt-2 reveal">A glimpse into my data explorations.</p>
             </div>
             <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project cards will be injected here -->
-            </div>
+                </div>
         </section>
 
-        <!-- Skills Section -->
         <section id="skills" class="py-24">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold reveal">Core Competencies</h2>
                 <p class="text-lg opacity-70 mt-2 reveal">The tools and technologies I use.</p>
             </div>
             <div id="skills-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Skills will be injected here -->
+                </div>
+        </section>
+
+        <section id="certifications" class="py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold reveal">Certifications</h2>
+                <p class="text-lg opacity-70 mt-2 reveal">My professional development and credentials.</p>
+            </div>
+            <div class="relative reveal">
+                <div id="certifications-container" class="flex overflow-x-auto space-x-8 pb-8 hide-scrollbar">
+                    </div>
+                <div class="absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-[var(--bg-main)] to-transparent pointer-events-none"></div>
+                <div class="absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-[var(--bg-main)] to-transparent pointer-events-none"></div>
             </div>
         </section>
 
-        <!-- AI Project Hub Section -->
         <section id="ai-hub" class="py-24">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold reveal">✨ AI Project Hub</h2>
@@ -239,22 +252,19 @@
                  <div id="api-key-status" class="text-xs text-center mt-4 opacity-60"></div>
             </div>
             <div id="ai-results-container" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- AI-generated project ideas will appear here -->
-            </div>
+                </div>
              <div id="ai-loader" class="text-center mt-12 hidden">
                 <div class="loader mx-auto"></div>
                 <p class="mt-4 opacity-70">Generating ideas with Gemini...</p>
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="py-24">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold reveal">Let's Connect</h2>
                 <p class="text-lg opacity-70 mt-2 reveal">Have a project in mind or just want to say hi?</p>
             </div>
             <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-                <!-- Email Card -->
                 <div class="card contact-card p-8 rounded-2xl shadow-lg reveal flex flex-col justify-between">
                     <div class="flex items-center gap-4">
                         <div class="p-3 rounded-full bg-red-500/10">
@@ -269,7 +279,6 @@
                         Copy Email
                     </button>
                 </div>
-                <!-- WhatsApp Card -->
                 <a href="https://wa.me/919538395727" target="_blank" rel="noopener noreferrer" class="card contact-card p-8 rounded-2xl shadow-lg block reveal flex flex-col justify-between group">
                     <div class="flex items-center gap-4">
                         <div class="p-3 rounded-full bg-green-500/10">
@@ -282,7 +291,6 @@
                     </div>
                      <div class="text-center mt-6 w-full bg-primary text-white font-bold py-3 rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-300 transform group-hover:scale-105">Send a Message</div>
                 </a>
-                <!-- LinkedIn Card -->
                 <a href="https://linkedin.com/in/manoj-b-390821218" target="_blank" rel="noopener noreferrer" class="card contact-card p-8 rounded-2xl shadow-lg block reveal flex flex-col justify-between group">
                     <div class="flex items-center gap-4">
                         <div class="p-3 rounded-full bg-blue-500/10">
@@ -295,7 +303,6 @@
                     </div>
                      <div class="text-center mt-6 w-full bg-primary text-white font-bold py-3 rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-300 transform group-hover:scale-105">View Profile</div>
                 </a>
-                <!-- GitHub Card -->
                 <a href="https://github.com/manojDOX" target="_blank" rel="noopener noreferrer" class="card contact-card p-8 rounded-2xl shadow-lg block reveal flex flex-col justify-between group">
                     <div class="flex items-center gap-4">
                         <div class="p-3 rounded-full bg-gray-500/10">
@@ -313,17 +320,14 @@
 
     </main>
 
-    <!-- Footer -->
     <footer class="border-t border-border-color mt-24">
         <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-            <p class="opacity-70 text-sm">&copy; 2025 MANOJ B. Crafted with passion.</p>
+            <p class="opacity-70 text-sm">© 2025 MANOJ B. Crafted with passion.</p>
             <div id="social-links" class="flex space-x-6 mt-6 md:mt-0">
-                <!-- Social links will be injected here -->
-            </div>
+                </div>
         </div>
     </footer>
     
-    <!-- API Key Modal -->
     <div id="api-key-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
         <div class="card p-8 rounded-2xl shadow-2xl max-w-md w-full mx-4">
             <div class="flex justify-between items-center">
@@ -332,12 +336,11 @@
             </div>
             <p class="mt-4 opacity-80">To use the AI Project Hub, please provide your own Google Gemini API key. Your key will only be stored in your browser for this session and will not be shared.</p>
             <input type="password" id="api-key-input" class="mt-4 w-full p-3 rounded-lg bg-transparent border-2 border-border-color focus:border-primary focus:outline-none transition-colors" placeholder="Paste your API key here">
-            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-sm text-primary hover:underline mt-2 inline-block">Get a free API key from Google AI Studio &rarr;</a>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-sm text-primary hover:underline mt-2 inline-block">Get a free API key from Google AI Studio →</a>
             <button id="save-key-btn" class="mt-6 w-full bg-primary text-white font-bold py-3 rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-300">Save & Generate</button>
         </div>
     </div>
 
-    <!-- Copy Notification -->
     <div id="copy-notification" class="fixed bottom-5 right-5 bg-primary text-white py-2 px-4 rounded-lg shadow-lg opacity-0 translate-y-4 transition-all duration-300">
         Email copied to clipboard!
     </div>
@@ -368,6 +371,26 @@
             { "name": "Data Visualization", "keywords": ["Power BI", "Tableau", "matplotlib", "seaborn", "Plotly"], "icon": "bar-chart-3" },
             { "name": "Database & Querying", "keywords": ["MySQL", "PostgreSQL", "SQLite"], "icon": "database" },
             { "name": "Developer Tools", "keywords": ["Git", "GitHub", "VS Code", "Google Colab"], "icon": "terminal-square" }
+          ],
+          "certifications": [
+            { "name": "Google Data Analytics", "issuer": "Google", "url": "#", "icon": "award" },
+            { "name": "IBM Data Analyst", "issuer": "IBM", "url": "#", "icon": "award" },
+            { "name": "Microsoft Certified: Power BI Data Analyst", "issuer": "Microsoft", "url": "#", "icon": "award" },
+            { "name": "Data Analysis with Python", "issuer": "freeCodeCamp", "url": "#", "icon": "award" },
+            { "name": "SQL for Data Science", "issuer": "Coursera", "url": "#", "icon": "award" },
+            { "name": "Tableau Desktop Specialist", "issuer": "Tableau", "url": "#", "icon": "award" },
+            { "name": "Advanced Excel for Data Analysis", "issuer": "LinkedIn Learning", "url": "#", "icon": "award" },
+            { "name": "Python for Everybody", "issuer": "University of Michigan", "url": "#", "icon": "award" },
+            { "name": "Data Science Math Skills", "issuer": "Duke University", "url": "#", "icon": "award" },
+            { "name": "AWS Certified Cloud Practitioner", "issuer": "Amazon Web Services", "url": "#", "icon": "award" },
+            { "name": "Analytics for All", "issuer": "GoSkills", "url": "#", "icon": "award" },
+            { "name": "Data Visualization with D3.js", "issuer": "Udacity", "url": "#", "icon": "award" },
+            { "name": "Machine Learning with Python", "issuer": "Stanford University", "url": "#", "icon": "award" },
+            { "name": "Big Data Foundations", "issuer": "IBM", "url": "#", "icon": "award" },
+            { "name": "Statistics with R", "issuer": "DataCamp", "url": "#", "icon": "award" },
+            { "name": "Data Engineering Foundations", "issuer": "Google Cloud", "url": "#", "icon": "award" },
+            { "name": "Business Analytics Nanodegree", "issuer": "Udacity", "url": "#", "icon": "award" },
+            { "name": "Agile with Atlassian Jira", "issuer": "Atlassian", "url": "#", "icon": "award" }
           ]
         };
 
@@ -408,6 +431,23 @@
                     </div>
                 </div>`;
             skillsContainer.innerHTML += skillCard;
+        });
+
+        const certificationsContainer = document.getElementById('certifications-container');
+        resumeData.certifications.forEach(cert => {
+            const certCard = `
+                <a href="${cert.url}" target="_blank" rel="noopener noreferrer" class="card p-6 rounded-2xl shadow-lg flex-shrink-0 w-80 group hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="flex items-center gap-4">
+                        <div class="p-3 rounded-full bg-primary/10">
+                            <i data-lucide="${cert.icon}" class="h-8 w-8 text-primary"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg group-hover:text-primary transition-colors">${cert.name}</h3>
+                            <p class="text-sm opacity-70">${cert.issuer}</p>
+                        </div>
+                    </div>
+                </a>`;
+            certificationsContainer.innerHTML += certCard;
         });
         
         const socialLinksContainer = document.getElementById('social-links');
