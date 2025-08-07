@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MANOJ B - Aspiring Data Analyst</title>
+    <title>MANOJ B - Data Scientist & Analyst</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -169,8 +169,8 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="text-center md:text-left">
                     <p class="text-primary font-semibold text-lg reveal" data-reveal-delay="100">Hello, I'm Manoj B.</p>
-                    <h1 class="text-5xl md:text-7xl font-bold mt-2 reveal" data-reveal-delay="200">Aspiring<br>Data Analyst</h1>
-                    <p class="mt-6 text-lg opacity-80 max-w-lg mx-auto md:mx-0 reveal" data-reveal-delay="300">I turn data into insights. Passionate about uncovering stories hidden in datasets and building powerful visualizations.</p>
+                    <h1 class="text-5xl md:text-7xl font-bold mt-2 reveal" data-reveal-delay="200">Data Scientist &<br>Analyst</h1>
+                    <p class="mt-6 text-lg opacity-80 max-w-lg mx-auto md:mx-0 reveal" data-reveal-delay="300">I build intelligent solutions that turn complex data into actionable insights. Passionate about leveraging AI, machine learning, and robust data pipelines to solve real-world problems.</p>
                     <div class="mt-10 flex flex-wrap items-center justify-center md:justify-start gap-4 reveal" data-reveal-delay="400">
                         <a href="#contact" class="bg-primary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105">Let's Talk</a>
                         <a href="https://resume.almagrow.com/manoj2882003/data-analyst" target="_blank" rel="noopener noreferrer" class="card font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
@@ -353,15 +353,16 @@
         const resumeData = {
           "basics": {
             "name": "MANOJ B",
-            "headline": "Aspiring Data Analyst",
+            "headline": "Data Scientist & Analyst",
             "email": "manoj2882003@gmail.com",
-            "summary": "Enthusiastic and detail-focused Data Analyst with hands-on experience in <strong>SQL</strong>, <strong>Excel</strong>, and <strong>Python</strong>. Built projects involving real-world datasets and created dashboards using <strong>Power BI</strong>. Strong interest in solving business problems using data. Quick learner, excited to grow and contribute to a data-driven team."
+            "summary": "Proactive and results-oriented Data Scientist with a strong foundation in data analysis and a proven ability to develop and deploy <strong>AI and Machine Learning</strong> solutions. Experienced in leveraging <strong>Python</strong>, <strong>SQL</strong>, and modern ML frameworks to build everything from predictive models to automated data insight systems. Eager to tackle challenging problems and contribute to a forward-thinking, data-driven team."
           },
           "profiles": [
             { "network": "LinkedIn", "url": "https://linkedin.com/in/manoj-b-390821218", "icon": "linkedin" },
             { "network": "GitHub", "url": "https://github.com/manojDOX", "icon": "github" }
           ],
           "projects": [
+            { "name": "AI Daily Digest", "summary": "An automated platform that scrapes AI news, summarizes it using a custom API, and presents a daily digest. A showcase of automation and API integration.", "keywords": ["AI", "Automation", "API", "Web Scraping"], "url": "https://manojdox.github.io/ai-daily-digest/", "imageUrl": "https://placehold.co/400x200/4dabf7/ffffff?text=AI+Digest" },
             { "name": "Amazon Prime Videos Analysis (EDA)", "summary": "Modeled 5+ years of transactional data using Python to identify key sales drivers and forecast future revenue streams.", "keywords": ["EDA", "Python","Pandas","MatPlotlib","Seaborn"], "url": "https://github.com/manojDOX/Amazon-EDA-Report", "imageUrl": "https://static.vecteezy.com/system/resources/previews/046/437/251/non_2x/amazon-prime-logo-free-png.png" },
             { "name": "Play Store App Review Analysis", "summary": "Analyzed 10,000+ user reviews using Python to uncover sentiment patterns and common complaints.", "keywords": ["EDA", "Python","Pandas","MatPlotlib","Seaborn"], "url": "https://github.com/manojDOX/Play-Store-App-Review-Analysis-EDA", "imageUrl": "https://user-images.githubusercontent.com/123643720/247931627-f91aede9-5c8e-45fa-8c3d-cf352448f2ff.png" },
             { "name": "DTDC Shipment & Delivery Analysis Dashboard", "summary": "Developed a Power BI dashboard to analyze 50K+ shipments, identifying 'Express' as the most profitable service.", "keywords": ["Power BI", "KPI Analysis", "Logistics"], "url": "https://github.com/manojDOX/DTDC_KPI_Analysis", "imageUrl": "https://seeklogo.com/images/D/dtdc-logo-E5352A7467-seeklogo.com.png" },
@@ -370,6 +371,7 @@
             { "name": "Medical Cost Analysis Dashboard", "summary": "Built a Power BI report analyzing medical insurance data to uncover cost patterns by age, gender, and region.", "keywords": ["Power BI","Excel", "Analysis"], "url": "https://github.com/manojDOX/Medical-Cost-Personal", "imageUrl": "https://play-lh.googleusercontent.com/r9xXKQBM0b8YCpECTkXQn9wYI2WXLG5otQZKJEUrbvINS7NvssUNOYx4BJA2npwSVQ" }
           ],
           "skills": [
+            { "name": "Machine Learning & AI", "keywords": ["Scikit-learn", "Predictive Modeling", "NLP", "API Integration", "Prompt Engineering", "LLMs"], "icon": "brain-circuit" },
             { "name": "Data Analysis Tools", "keywords": ["Excel", "SQL", "Power Query", "ETL Concepts", "DAX", "VBA"], "icon": "database-zap" },
             { "name": "Programming & Scripting", "keywords": ["Python", "Pandas", "NumPy", "Streamlit", "EDA", "OOP"], "icon": "code-2" },
             { "name": "Data Visualization", "keywords": ["Power BI", "Tableau", "matplotlib", "seaborn", "Plotly"], "icon": "bar-chart-3" },
@@ -461,7 +463,7 @@
         resumeData.projects.forEach(project => {
             const projectCard = `
                 <div class="card rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 reveal">
-                    <div class="h-40 mb-6 rounded-lg overflow-hidden bg-white p-4">
+                    <div class="h-40 mb-6 rounded-lg overflow-hidden bg-white p-4 flex items-center justify-center">
                         <img src="${project.imageUrl}" alt="${project.name} Logo" class="w-full h-full object-contain" onerror="this.onerror=null;this.src='https://placehold.co/400x200/cccccc/ffffff?text=Image+Not+Found';">
                     </div>
                     <h3 class="text-xl font-bold">${project.name}</h3>
@@ -722,7 +724,7 @@
             generateBtn.disabled = true;
 
             try {
-                const prompt = `You are an expert career coach for data analysts. Based on the topic "${userInput}", generate three distinct data analysis project ideas. For each idea, provide a name, a one-sentence summary, and three key technologies that would be used.`;
+                const prompt = `You are an expert career coach for data scientists. Based on the topic "${userInput}", generate three distinct data science or AI project ideas. For each idea, provide a name, a one-sentence summary, and three key technologies that would be used.`;
                 
                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
                 const payload = {
