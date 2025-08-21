@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>True Scikit-Learn Mind Map</title>
+  <style>
+    /* Basic page styling */
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #fdfdfd;
+      overflow: hidden; /* Hide scrollbars */
+    }
+
+    /* SVG container */
+    #mindmap {
+      width: 100vw;
+      height: 100vh;
+      cursor: grab;
+    }
+    #mindmap:active {
+      cursor: grabbing;
+    }
+
+    /* Node group styling */
+    .node {
+      cursor: pointer; /* Indicates nodes are clickable */
+      transition: filter 0.3s ease;
+    }
+
+    .node:hover {
+      filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.3));
+    }
+
+    /* Node shape styling */
+    .node rect, .node circle {
+      stroke-width: 2.5px;
+      transition: stroke 0.3s ease, fill 0.3s ease;
+    }
+
+    /* Root node: scikit-learn */
+    .node-root circle {
+      fill: #34495e;
+      stroke: #2c3e50;
+    }
+    .node-root text {
+      fill: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    /* Category nodes: Supervised Learning, etc. */
+    .node-category rect {
+      fill: #9b59b6;
+      stroke: #8e44ad;
+    }
+    .node-category text {
+      fill: white;
+      font-weight: 500;
+    }
+    
+    /* Sub-category nodes: Learning Material topics */
+    .node-sub-category rect {
+      fill: #3498db;
+      stroke: #2980b9;
+    }
+    .node-sub-category text {
+      fill: white;
+    }
+
+    /* Class/Estimator nodes: e.g. KMeans, MSE */
+    .node-class circle {
+      fill: #e67e22;
+      stroke: #d35400;
+    }
+    .node-class text {
+      fill: white;
+    }
+
+    /* Parameter / Summary / Code nodes (The Yellow Nodes) */
+    .node-param rect {
+      fill: #f1c40f;
+      stroke: #f39c12;
+    }
+    .node-param text {
+      fill: black; 
+      font-size: 12px;
+    }
+    .node-param tspan {
+      font-family: "Courier New", Courier, monospace;
+      font-weight: bold;
+      fill: black;
+    }
+
+    /* Common styles */
+    .node text {
+      font-size: 14px;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+
+    /* Link (line) styling */
+    .link {
+      fill: none;
+      stroke: #bdc3c7;
+      stroke-width: 2.5px;
+    }
+  </style>
+</head>
+<body>
+  <svg id="mindmap"></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const data = {
+      name: "scikit-learn", type: "root",
+      children: [
+        {
+          name: "Supervised Learning", type: "category",
+          children: [
+            {
+              name: "Linear Regression", type: "sub-category",
+              children: [
+                { 
+                  name: [
+                    "• Predicts a target by fitting the best linear relationship.",
+                    "• Minimizes the sum of squared differences (errors).",
+                    "• Simple, interpretable, and serves as a strong baseline."
+                  ],
+                  type: "param"
+                },
+                { name: "Formula: y = β₀ + β₁x + ε", type: "param" },
+                { 
+                  name: [
+                    "from sklearn.linear_model import LinearRegression",
+                    "model = LinearRegression()",
+                    "model.fit(X_train, y_train)",
+                    "y_pred = model.predict(X_test)"
+                  ],
+                  type: "param" 
+                }
+              ]
+            },
+            {
+              name: "Evaluation Metrics", type: "sub-category",
+              children: [
+                { 
+                  name: "MSE", type: "class",
+                  children: [
+                    { name: ["Mean Squared Error", "Sensitive to large errors"], type: "param" },
+                    { name: "Formula: (1/n) * Σ(yᵢ - ŷᵢ)²", type: "param" }
+                  ]
+                },
+                { 
+                  name: "RMSE", type: "class",
+                  children: [
+                    { name: ["Root Mean Squared Error", "In original units of target"], type: "param" },
+                    { name: "Formula: √MSE", type: "param" }
+                  ]
+                },
+                { 
+                  name: "MAE", type: "class",
+                  children: [
+                    { name: ["Mean Absolute Error", "Less sensitive to outliers"], type: "param" },
+                    { name: "Formula: (1/n) * Σ|yᵢ - ŷᵢ|", type: "param" }
+                  ]
+                },
+                { 
+                  name: "R-Squared", type: "class",
+                  children: [
+                    { name: ["Coefficient of Determination", "Proportion of variance explained"], type: "param" },
+                    { name: "Formula: 1 - (RSS / TSS)", type: "param" }
+                  ]
+                }
+              ]
+            },
+             {
+              name: "Gradient Descent", type: "sub-category",
+               children: [
+                { 
+                  name: [
+                    "• An optimization algorithm to find the minimum of a cost function.",
+                    "• Iteratively moves in the direction opposite to the gradient.",
+                    "• Step size is controlled by the 'learning rate' hyperparameter."
+                  ],
+                  type: "param"
+                },
+                { name: "Update Rule: θ := θ - α * ∇J(θ)", type: "param" }
+              ]
+            },
+            {
+              name: "Bias-Variance Tradeoff", type: "sub-category",
+              children: [
+                 { 
+                  name: [
+                    "• The core challenge of building a generalizable model.",
+                    "• High Bias (Underfitting): Model is too simple.",
+                    "• High Variance (Overfitting): Model is too complex.",
+                    "• Goal: Balance both to minimize total error on new data."
+                  ],
+                  type: "param"
+                },
+                { name: "Total Error = Bias² + Variance + Noise", type: "param" }
+              ]
+            },
+            {
+              name: "Regularization", type: "sub-category",
+              children: [
+                { 
+                  name: [
+                    "• A technique to prevent overfitting by penalizing complexity.",
+                    "• Adds a penalty for large coefficient values to the cost function.",
+                    "• L1 (Lasso) can perform feature selection.",
+                    "• L2 (Ridge) shrinks coefficients but rarely to zero."
+                  ],
+                  type: "param"
+                },
+                { name: "L1 Cost: RSS + α * Σ|βⱼ|", type: "param" },
+                { name: "L2 Cost: RSS + α * Σ(βⱼ)²", type: "param" },
+                { 
+                  name: [
+                    "from sklearn.linear_model import Lasso, Ridge",
+                    "lasso = Lasso(alpha=1.0)",
+                    "ridge = Ridge(alpha=1.0)",
+                    "lasso.fit(X_train, y_train)",
+                    "ridge.fit(X_train, y_train)"
+                  ], 
+                  type: "param" 
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: "Unsupervised Learning", type: "category",
+          children: [
+            { name: "Clustering", type: "sub-category", children: [
+              { name: "KMeans", type: "class", children: [{name: "n_clusters=8", type: "param"}] },
+              { name: "DBSCAN", type: "class", children: [{name: "eps=0.5", type: "param"}] },
+              { name: "AgglomerativeClustering", type: "class" }
+            ]},
+            { name: "Decomposition", type: "sub-category", children: [
+              { name: "PCA", type: "class", children: [{name: "n_components", type: "param"}] },
+              { name: "TruncatedSVD", type: "class" }
+            ]}
+          ]
+        },
+        {
+          name: "Model Selection", type: "category",
+          children: [
+            { name: "Splitting", type: "sub-category", children: [
+              { name: "train_test_split", type: "class" },
+              { name: "KFold", type: "class", children: [{name: "n_splits=5", type: "param"}] },
+              { name: "StratifiedKFold", type: "class" }
+            ]},
+            { name: "Tuning", type: "sub-category", children: [
+              { name: "GridSearchCV", type: "class" },
+              { name: "RandomizedSearchCV", type: "class" }
+            ]}
+          ]
+        },
+        {
+          name: "Preprocessing", type: "category",
+          children: [
+              { name: "StandardScaler", type: "class" },
+              { name: "MinMaxScaler", type: "class" },
+              { name: "OneHotEncoder", type: "class" }
+          ]
+        }
+      ]
+    };
+
+    let root;
+    const duration = 500;
+    
+    const svg = d3.select("#mindmap");
+    const g = svg.append("g");
+
+    function draw() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      svg.attr("width", width).attr("height", height);
+      
+      root = d3.hierarchy(data, d => d.children);
+      root.x0 = height / 2;
+      root.y0 = 0;
+      
+      if(root.children) {
+        root.children.forEach(collapse);
+      }
+
+      const initialTransform = d3.zoomIdentity.translate(150, height / 2);
+      svg.call(zoom.transform, initialTransform);
+      
+      update(root);
+    }
+    
+    const zoom = d3.zoom().scaleExtent([0.1, 3]).on("zoom", (event) => {
+      g.attr("transform", event.transform);
+    });
+    svg.call(zoom);
+
+    function collapse(d) {
+      if (d.children) {
+        d._children = d.children;
+        d._children.forEach(collapse);
+        d.children = null;
+      }
+    }
+
+    function update(source) {
+      const treeLayout = d3.tree().nodeSize([150, 200]); 
+      const treeData = treeLayout(root);
+      
+      const nodes = treeData.descendants();
+      const links = treeData.descendants().slice(1);
+
+      nodes.forEach(d => {
+        d.y = d.depth * 400; 
+      });
+
+      const node = g.selectAll('g.node')
+        .data(nodes, d => d.id || (d.id = crypto.randomUUID()));
+
+      const nodeEnter = node.enter().append('g')
+        .attr('class', d => `node node-${d.data.type}`)
+        .attr('transform', `translate(${source.y0},${source.x0})`)
+        .on('click', click);
+
+      nodeEnter.each(function(d) {
+          const group = d3.select(this);
+          const isMultiLine = Array.isArray(d.data.name);
+          const text = group.append('text');
+
+          if (isMultiLine) {
+              const lineHeight = d.data.type === 'param' ? '1.3em' : '1.2em';
+              d.data.name.forEach((line, i) => {
+                  text.append('tspan')
+                      .attr('x', 0)
+                      .attr('dy', i === 0 ? 0 : lineHeight)
+                      .text(line);
+              });
+          } else {
+              text.text(d.data.name);
+          }
+          
+          const bbox = text.node().getBBox();
+          
+          if (d.data.type === 'root' || d.data.type === 'class') {
+               group.insert('circle', 'text')
+                   .attr('r', d.data.type === 'root' ? 50 : Math.max(bbox.width, bbox.height) / 2 + 15);
+          } else {
+              group.insert('rect', 'text')
+                  .attr('x', bbox.x - 20)
+                  .attr('y', bbox.y - 15)
+                  .attr('width', bbox.width + 40)
+                  .attr('height', bbox.height + 30)
+                  .attr('rx', 10);
+          }
+      });
+      
+      const nodeUpdate = nodeEnter.merge(node);
+
+      nodeUpdate.transition().duration(duration)
+        .attr('transform', d => `translate(${d.y},${d.x})`);
+
+      nodeUpdate.select('rect, circle')
+        .style('stroke', d => d._children ? '#e67e22' : null);
+
+      const nodeExit = node.exit().transition().duration(duration)
+        .attr('transform', `translate(${source.y},${source.x})`)
+        .style('opacity', 1e-6)
+        .remove();
+
+      const link = g.selectAll('path.link').data(links, d => d.id);
+
+      const linkEnter = link.enter().insert('path', "g")
+        .attr("class", "link")
+        .attr('d', d => {
+          const o = {x: source.x0, y: source.y0};
+          return `M${o.y},${o.x}C${(o.y + o.y) / 2},${o.x} ${(o.y + o.y) / 2},${o.x} ${o.y},${o.x}`;
+        });
+      
+      const linkUpdate = linkEnter.merge(link);
+
+      linkUpdate.transition().duration(duration)
+        .attr('d', d => {
+          return `M${d.y},${d.x}C${(d.y + d.parent.y) / 2},${d.x} ${(d.y + d.parent.y) / 2},${d.parent.x} ${d.parent.y},${d.parent.x}`;
+        });
+
+      link.exit().transition().duration(duration)
+        .attr('d', d => {
+          const o = {x: source.x, y: source.y};
+          return `M${o.y},${o.x}C${(o.y + o.y) / 2},${o.x} ${(o.y + o.y) / 2},${o.x} ${o.y},${o.x}`;
+        })
+        .remove();
+
+      nodes.forEach(d => {
+        d.x0 = d.x;
+        d.y0 = d.y;
+      });
+    }
+
+    function click(event, d) {
+      if (d.children) {
+        d._children = d.children;
+        d.children = null;
+      } else {
+        d.children = d._children;
+        d._children = null;
+      }
+      update(d);
+    }
+    
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => { clearTimeout(timeout); func(...args); };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    draw();
+    window.addEventListener('resize', debounce(draw, 250));
+  </script>
+</body>
+</html>
